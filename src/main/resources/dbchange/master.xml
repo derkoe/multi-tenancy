@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="20150817-1" author="koc">
+        <createTable tableName="users">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKeyName="pk_users" primaryKey="true" nullable="false" />
+            </column>
+            <column name="username" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="password" type="varchar(100)" />
+            <column name="enabled" type="boolean" />
+        </createTable>
+        <createTable tableName="authorities">
+            <column name="user_id" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="authority" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <addPrimaryKey constraintName="pk_authorities" tableName="authorities" columnNames="user_id, authority" />
+        <addForeignKeyConstraint constraintName="fk_authorities_users" referencedTableName="users"
+            baseColumnNames="user_id" baseTableName="authorities" referencedColumnNames="id" />
+    </changeSet>
+
+</databaseChangeLog>
+
